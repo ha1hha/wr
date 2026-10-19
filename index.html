@@ -446,39 +446,53 @@ body>button{transition:opacity .2s}
 .npb{height:4px;background:#fff4;border-radius:2px;cursor:pointer;position:relative}.npb div{height:100%;background:#fff;border-radius:2px;position:relative}.npb div:after{content:'';position:absolute;right:-6px;top:-4px;width:12px;height:12px;border-radius:50%;background:#fff}.npm{display:flex;justify-content:space-between;font-size:11px;color:#c8c8c8;margin-top:8px}
 .npc{display:flex;align-items:center;justify-content:space-between;padding:14px 22px 8px}.npc span{cursor:pointer;display:flex}.npp{width:64px;height:64px;border-radius:50%;background:#fff;color:#000;align-items:center;justify-content:center}.npp svg{width:30px;height:30px}.npf{display:flex;justify-content:space-between;padding:10px 24px 0;color:#c8c8c8}
 .mus{background:#1a1a1a}.mus .wgi{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.mus .wsh{position:absolute;inset:0;background:linear-gradient(180deg,#0000 30%,#000b 100%)}.mus>*{position:relative}.mus .wgi,.mus .wsh,.mus .pl{position:absolute}.mus .wlg{position:absolute;top:12px;left:12px}.mus .pl{background:#1ed760;color:#000;top:auto;bottom:34px;right:12px;width:36px;height:36px}.mus .pl svg{width:18px;height:18px}.mus .ti,.mus .ar{padding-right:42px;text-shadow:0 1px 3px #0008}.mus .ar{margin-bottom:8px}
-
-
-/* Responsive home-screen composition: scale home icons/widgets with the phone viewport.
-   This intentionally changes CSS only; all HTML and JavaScript functionality stays intact. */
-#phone{
-  --w:min(100vw,calc(100dvh * 0.4605263158),400px);
-  --c:calc((var(--w) - 28px)/4);
-  width:var(--w);
-  aspect-ratio:1260 / 2736;
-  container-type:inline-size;
+</style><style id="fitFix">
+/* ===== v44 화면 맞춤 보정 (디자인 전용) ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior:none;touch-action:manipulation}
+body{overscroll-behavior:none;-webkit-font-smoothing:antialiased}
+/* 앱 아이콘: iOS 스퀴클 비율 + 화면 폭에 따라 자동 크기 + 미세한 테두리 광택 */
+i.app{position:relative;width:clamp(52px,calc(var(--c) * .68),68px);height:clamp(52px,calc(var(--c) * .68),68px);border-radius:22.37%;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+i.app svg{display:block;width:100%;height:100%}
+i.app::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.28)}
+#home .app{border-radius:22.37%;box-shadow:0 1px 3px rgba(0,0,0,.22)}
+.dock{border-radius:34px}
+/* 아이폰(작은 화면): 시뮬레이터 틀을 없애고 화면 전체를 꽉 채움 */
+@media (max-width:500px),(pointer:coarse) and (max-width:900px){
+  :root{--phoneH:100vh}
+  @supports (height:100dvh){:root{--phoneH:100dvh}}
+  html,body{height:var(--phoneH);min-height:var(--phoneH);position:fixed;inset:0;width:100%;background:#000}
+  body{display:block}
+  #phone{--w:100vw;--c:calc((100vw - 28px)/4);width:100vw;height:var(--phoneH);aspect-ratio:auto;border-radius:0!important;box-shadow:none!important;margin:0}
+  /* iOS 사파리 입력창 자동 확대 방지(16px 이상) */
+  input,textarea,select,.composerText,.messageComposer input,#editPanel input,#editPanel textarea,#editPanel select{font-size:16px!important}
+  #editPanel{height:var(--phoneH)}
 }
-#icons{
-  top:calc(15cqw + env(safe-area-inset-top,0px));
-  left:3.5cqw;
-  right:3.5cqw;
-  grid-auto-rows:23.25cqw;
+/* 높이가 낮은 아이폰(SE, 주소창 있는 사파리 등) */
+@media (max-width:500px) and (max-height:760px){
+  .dock{height:78px;bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+  #lock .t{font-size:clamp(88px,24vw,118px)}
+  .pk{grid-template-columns:repeat(3,68px);gap:12px 20px}.pk div{height:68px;font-size:30px}
+  #pass .pt{margin-top:calc(84px + env(safe-area-inset-top,0px))}.pd{margin:22px 0 28px}
+  .post .pic{height:300px}
 }
-#home .ic{font-size:2.75cqw;gap:1.25cqw}
-i.app{width:15cqw;height:15cqw;border-radius:3.5cqw}
-.wg{margin:1.5cqw;border-radius:5.5cqw;padding:3.5cqw}
-.cal .dow{font-size:3.25cqw}
-.cal .day{font-size:11cqw;line-height:1.05}
-.cal .ev{font-size:3cqw;margin-top:1.5cqw;padding-left:1.75cqw;border-left-width:.75cqw;line-height:1.25;margin-bottom:1.25cqw}
-.cal .ev b{font-size:2.75cqw}
-.dock{left:3cqw;right:3cqw;bottom:calc(6.5cqw + env(safe-area-inset-bottom,0px));height:22cqw;border-radius:7.5cqw}
-.mus .pl{bottom:8.5cqw;right:3cqw;width:9cqw;height:9cqw;font-size:3.5cqw}
-.mus .pl svg{width:4.5cqw;height:4.5cqw}
-.mus .ti{font-size:3.75cqw}
-.mus .ar{font-size:3cqw;margin-bottom:2cqw}
-.mus .ti,.mus .ar{padding-right:10.5cqw}
-.mus .pr{height:1cqw}
+@media (max-width:359px){.status{padding-left:20px;padding-right:20px}.pk{grid-template-columns:repeat(3,64px);gap:10px 16px}.pk div{height:64px}}
 
-</style></head><body>
+/* 떠 있는 편집/공개 버튼: 폰에서는 상태바 빈 공간에 작은 아이콘 버튼으로 (날짜·시간 가림 방지) */
+@media (max-width:500px){
+  body>button[style*="122, 255"],body>button[style*="52, 199, 89"]{font-size:0!important;width:30px!important;height:30px!important;padding:0!important;border-radius:50%!important;top:calc(8px + env(safe-area-inset-top,0px))!important;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 6px rgba(0,0,0,.25)!important}
+  body>button[style*="122, 255"]{left:64px!important;right:auto!important}
+  body>button[style*="52, 199, 89"]{left:98px!important;right:auto!important}
+  body>button[style*="122, 255"]::before{content:"\270F\FE0F";font-size:15px}
+  body>button[style*="52, 199, 89"]::before{content:"\1F310";font-size:16px}
+  body>button[style*="122, 255"]::after,body>button[style*="52, 199, 89"]::after{content:"";position:absolute;inset:-7px}
+}
+/* 아이폰 가로 모드: 세로로 돌려달라는 안내 */
+@media (orientation:landscape) and (max-height:500px) and (pointer:coarse){
+  body::after{content:"iPhone을 세로로 돌려 주세요";position:fixed;inset:0;z-index:99999;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;font:600 17px -apple-system,"Apple SD Gothic Neo",sans-serif}
+}
+/* 아이패드/데스크톱: 폰 틀이 창 크기에 맞춰 찌그러지지 않도록 최소 폭 보장 */
+@media (min-width:501px) and (pointer:fine){ #phone{min-width:340px} }
+</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="iPhone"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#000000"></head><body>
 <div id="phone">
   <div class="status" id="st"><span id="clk">9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect y="8" width="3" height="4" rx="1"></rect><rect x="5" y="5.5" width="3" height="6.5" rx="1"></rect><rect x="10" y="3" width="3" height="9" rx="1"></rect><rect x="15" width="3" height="12" rx="1"></rect></svg><svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 2.2c2.3 0 4.400.9 6 2.400l1-1.100C13.600 1.700 11.200.6 8.500.6S3.400 1.700 1.500 3.500l1 1.100c1.600-1.500 3.700-2.400 6-2.400zm0 3.500c1.400 0 2.700.5 3.700 1.400l1-1.100C11.900 4.900 10.300 4.200 8.500 4.200S5.100 4.900 3.800 6l1 1.100c1-.9 2.300-1.400 3.700-1.400zm0 3.400c.7 0 1.300.3 1.800.7L8.500 11.700 6.700 9.800c.5-.4 1.100-.7 1.800-.7z"></path></svg><i class="bat"></i></span></div>
   <div class="island"></div>
@@ -568,19 +582,19 @@ tick();setInterval(tick,10000);
 const g=(a,b)=>`<defs><linearGradient id="G${a.slice(1)}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="60" height="60" fill="url(#G${a.slice(1)})"/>`;
 const petals=["#ff3b30","#ff9500","#ffcc00","#34c759","#00c7be","#0a84ff","#af52de","#ff2d55"].map((c,i)=>`<ellipse cx="30" cy="19" rx="7" ry="11" fill="${c}" opacity=".75" transform="rotate(${i*45} 30 30)" style="mix-blend-mode:multiply"/>`).join("");
 const ICON={
- phone:g("#6ee26c","#1fb83f")+`<path d="M19 13c2-2 5-1 6.500 1l2 5c.6 1.600 0 3-1.300 4l-1.800 1.500c1.800 4 5 7.200 9 9l1.500-2c1-1.300 2.500-1.800 4-1.200l5 2c2 1 3 4 1 6-2.500 2.500-5.500 4-8.500 3.500C25 42 16 33 14.500 22.500c-.5-3 1-6 4.500-9.500z" fill="#fff"/>`,
- msg:g("#6ee26c","#1fb83f")+`<ellipse cx="30" cy="28" rx="19" ry="15" fill="#fff"/><path d="M14 46c4-1 6-4 6-6l7 2z" fill="#fff"/>`,
- safari:g("#fff","#dfe9f7")+`<circle cx="30" cy="30" r="21" fill="#1a8cff"/><circle cx="30" cy="30" r="18" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="1 4.5"/><path d="M40 20L34 34 20 40 26 26z" fill="#fff"/><path d="M40 20L34 34 26 26z" fill="#ff3b30"/>`,
+ phone:`<defs><linearGradient id="iPh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67ee7a"/><stop offset="1" stop-color="#0fb932"/></linearGradient></defs><rect width="60" height="60" fill="url(#iPh)"/><path d="M19 13c2-2 5-1 6.500 1l2 5c.6 1.600 0 3-1.300 4l-1.800 1.500c1.800 4 5 7.200 9 9l1.500-2c1-1.300 2.500-1.800 4-1.200l5 2c2 1 3 4 1 6-2.500 2.500-5.500 4-8.500 3.500C25 42 16 33 14.500 22.500c-.5-3 1-6 4.500-9.500z" fill="#fff"/>`,
+ msg:`<defs><linearGradient id="iMs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67ee7a"/><stop offset="1" stop-color="#0fb932"/></linearGradient></defs><rect width="60" height="60" fill="url(#iMs)"/><ellipse cx="30" cy="27" rx="21" ry="16.500" fill="#fff"/><path d="M13.500 47.500c4.800-.8 8.600-3.400 10.600-6.800l-9.600-3.200c.4 3.800 0 7.600-1 10z" fill="#fff"/>`,
+ safari:`<defs><linearGradient id="iSf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfdfd"/><stop offset="1" stop-color="#dde8f6"/></linearGradient><linearGradient id="iSf2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2bb4ff"/><stop offset="1" stop-color="#0a64f0"/></linearGradient></defs><rect width="60" height="60" fill="url(#iSf)"/><circle cx="30" cy="30" r="22.500" fill="url(#iSf2)"/><g stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".95"><path d="M30 9.500v3M30 47.500v3M9.500 30h3M47.500 30h3M44.500 15.500l-2 2M17.500 42.500l-2 2M15.500 15.500l2 2M42.500 42.500l2 2"/></g><path d="M41.500 18.500L34 34 18.500 41.500 26 26z" fill="#fff"/><path d="M41.500 18.500L34 34 26 26z" fill="#ff453a"/>`,
  music:`<rect width="60" height="60" fill="#000"/><circle cx="30" cy="30" r="21" fill="#1ed760"/><path d="M16 23c10-3 20-2 28 3M17.500 31c8-2.500 17-1.500 24 3M19 38.500c7-2 14-1 19 2" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round"/>`,
- notes:`<rect width="60" height="60" fill="#fff"/><rect width="60" height="17" fill="#ffd60a"/><path d="M9 29h42M9 38h42M9 47h42" stroke="#e5e5ea" stroke-width="2"/>`,
+ notes:`<defs><linearGradient id="iNt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe45c"/><stop offset="1" stop-color="#ffcc00"/></linearGradient></defs><rect width="60" height="60" fill="#fff"/><rect width="60" height="19" fill="url(#iNt)"/><path d="M9 30h42M9 39h42M9 48h42" stroke="#e1e1e6" stroke-width="1.600"/>`,
  photos:`<rect width="60" height="60" fill="#fff"/>${petals}`,
- camera:g("#c7c7cc","#8e8e93")+`<rect x="10" y="19" width="40" height="25" rx="6" fill="#1c1c1e"/><rect x="21" y="15" width="10" height="6" rx="2" fill="#1c1c1e"/><circle cx="30" cy="32" r="9" fill="#3a3a3c" stroke="#8e8e93" stroke-width="2"/><circle cx="30" cy="32" r="4" fill="#0a0a0c"/>`,
- settings:g("#aeaeb2","#636366")+`<circle cx="30" cy="30" r="15" fill="none" stroke="#e5e5ea" stroke-width="7" stroke-dasharray="5.9 5.9"/><circle cx="30" cy="30" r="12" fill="#e5e5ea"/><circle cx="30" cy="30" r="5" fill="#7c7c80"/>`,
- maps:`<rect width="60" height="60" fill="#e6f0d8"/><path d="M0 42L60 18" stroke="#fff" stroke-width="9"/><path d="M12 0L44 60" stroke="#ffd60a" stroke-width="6"/><path d="M-5 20L65 52" stroke="#5ac8fa" stroke-width="4"/><circle cx="36" cy="26" r="9" fill="#ff3b30"/><circle cx="36" cy="26" r="3.500" fill="#fff"/>`,
- clock:`<rect width="60" height="60" fill="#000"/><circle cx="30" cy="30" r="23" fill="#fff"/><path d="M30 30V14M30 30l10 6" stroke="#111" stroke-width="3" stroke-linecap="round"/><path d="M30 30L18 40" stroke="#ff9500" stroke-width="1.500"/>`,
+ camera:`<defs><linearGradient id="iCm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dcdce1"/><stop offset="1" stop-color="#8e8e93"/></linearGradient></defs><rect width="60" height="60" fill="url(#iCm)"/><rect x="9" y="19" width="42" height="26" rx="7" fill="#1c1c1e"/><path d="M22 19l2.500-4.500h11L38 19z" fill="#1c1c1e"/><circle cx="30" cy="32" r="10" fill="#2c2c2e" stroke="#636366" stroke-width="2"/><circle cx="30" cy="32" r="5.500" fill="#0b1a33"/><circle cx="28" cy="30" r="1.600" fill="#6aa8ff" opacity=".8"/><circle cx="44" cy="24" r="1.800" fill="#ffd60a"/>`,
+ settings:`<defs><linearGradient id="iSt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c7c7cc"/><stop offset="1" stop-color="#7c7c82"/></linearGradient></defs><rect width="60" height="60" fill="url(#iSt)"/><circle cx="30" cy="30" r="16" fill="none" stroke="#3a3a3c" stroke-width="7" stroke-dasharray="6.300 6.300"/><circle cx="30" cy="30" r="13" fill="#3a3a3c"/><circle cx="30" cy="30" r="9" fill="#e5e5ea"/><circle cx="30" cy="30" r="4.500" fill="#8e8e93"/>`,
+ maps:`<rect width="60" height="60" fill="#eef3e3"/><path d="M0 44L60 20" stroke="#fff" stroke-width="10"/><path d="M14 0L46 60" stroke="#ffd60a" stroke-width="6"/><path d="M-5 18L65 52" stroke="#64d2ff" stroke-width="5"/><path d="M0 8l22 0" stroke="#fff" stroke-width="3"/><circle cx="36" cy="26" r="9.500" fill="#ff453a"/><circle cx="36" cy="26" r="3.800" fill="#fff"/>`,
+ clock:`<rect width="60" height="60" fill="#000"/><circle cx="30" cy="30" r="25" fill="#fff"/><g stroke="#1c1c1e" stroke-linecap="round"><path d="M30 8v3.500M30 48.500V52M8 30h3.500M48.500 30H52" stroke-width="2"/><path d="M41 11l-1.700 3M19 49l1.700-3M49 19l-3 1.700M11 41l3-1.700M49 41l-3-1.700M11 19l3 1.700M41 49l-1.700-3M19 11l1.700 3" stroke-width="1"/></g><path d="M30 30V16M30 30l9 5" stroke="#111" stroke-width="3" stroke-linecap="round"/><path d="M30 34V13" stroke="#ff9f0a" stroke-width="1.400" stroke-linecap="round"/><circle cx="30" cy="30" r="2" fill="#ff9f0a"/>`,
  x:`<rect width="60" height="60" fill="#000"/><path d="M16 15h8l8 11 9-11h4L34 29l11 16h-8l-9-12-10 12h-4l12-14z" fill="#fff"/>`,
  kakao:`<rect width="60" height="60" fill="#fee500"/><ellipse cx="30" cy="28" rx="19" ry="15" fill="#3b1e1e"/><path d="M20 44l6-5 5 1z" fill="#3b1e1e"/>`,
- insta:g("#fdc468","#c32aa3").replace('y2="1"','x2="1" y2="1"')+`<rect x="14" y="14" width="32" height="32" rx="10" fill="none" stroke="#fff" stroke-width="3.500"/><circle cx="30" cy="30" r="7.500" fill="none" stroke="#fff" stroke-width="3.500"/><circle cx="40" cy="20" r="2.200" fill="#fff"/>`
+ insta:`<defs><radialGradient id="iIg" cx=".3" cy="1.05" r="1.15"><stop offset="0" stop-color="#fdf497"/><stop offset=".1" stop-color="#fdf497"/><stop offset=".45" stop-color="#fd5949"/><stop offset=".6" stop-color="#d6249f"/><stop offset="1" stop-color="#285aeb"/></radialGradient></defs><rect width="60" height="60" fill="url(#iIg)"/><rect x="14" y="14" width="32" height="32" rx="10" fill="none" stroke="#fff" stroke-width="3.500"/><circle cx="30" cy="30" r="7.500" fill="none" stroke="#fff" stroke-width="3.500"/><circle cx="40" cy="20" r="2.200" fill="#fff"/>`
 };
 const mkIc=k=>`<i class="app"><svg viewBox="0 0 60 60" width="60" height="60">${ICON[k]}</svg></i>`;
 
