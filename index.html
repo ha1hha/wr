@@ -448,52 +448,35 @@ body>button{transition:opacity .2s}
 .mus{background:#1a1a1a}.mus .wgi{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.mus .wsh{position:absolute;inset:0;background:linear-gradient(180deg,#0000 30%,#000b 100%)}.mus>*{position:relative}.mus .wgi,.mus .wsh,.mus .pl{position:absolute}.mus .wlg{position:absolute;top:12px;left:12px}.mus .pl{background:#1ed760;color:#000;top:auto;bottom:34px;right:12px;width:36px;height:36px}.mus .pl svg{width:18px;height:18px}.mus .ti,.mus .ar{padding-right:42px;text-shadow:0 1px 3px #0008}.mus .ar{margin-bottom:8px}
 
 
-/* ===== iPhone 최신 기종 화면 맞춤 보정 (기능/스크립트 변경 없음) ===== */
-html, body {
-  width: 100%;
-  min-width: 0;
-  min-height: 100%;
-  min-height: 100dvh;
+/* Responsive home-screen composition: scale home icons/widgets with the phone viewport.
+   This intentionally changes CSS only; all HTML and JavaScript functionality stays intact. */
+#phone{
+  --w:min(100vw,calc(100dvh * 0.4605263158),400px);
+  --c:calc((var(--w) - 28px)/4);
+  width:var(--w);
+  aspect-ratio:1260 / 2736;
+  container-type:inline-size;
 }
-body {
-  min-height: 100dvh;
-  min-height: 100svh;
+#icons{
+  top:calc(15cqw + env(safe-area-inset-top,0px));
+  left:3.5cqw;
+  right:3.5cqw;
+  grid-auto-rows:23.25cqw;
 }
-#phone {
-  width: min(100vw, calc(100dvh * 1260 / 2736));
-  max-width: 440px;
-  max-height: 100dvh;
-  aspect-ratio: 1260 / 2736;
-  flex: 0 0 auto;
-}
-@media (max-width: 500px) {
-  html, body {
-    width: 100%;
-    height: 100%;
-    height: 100dvh;
-    overflow: hidden;
-  }
-  body { align-items: center; justify-content: center; }
-  #phone {
-    width: min(100vw, calc(100dvh * 1260 / 2736));
-    max-width: none;
-    max-height: 100dvh;
-    border-radius: 0;
-    box-shadow: none;
-  }
-  #editPanel {
-    width: 100vw;
-    height: 100%;
-    height: 100dvh;
-    max-height: 100dvh;
-    overflow: hidden;
-  }
-}
-@media (min-width: 501px) {
-  #phone {
-    width: min(440px, calc(100dvh * 1260 / 2736), calc(100vw - 32px));
-  }
-}
+#home .ic{font-size:2.75cqw;gap:1.25cqw}
+i.app{width:15cqw;height:15cqw;border-radius:3.5cqw}
+.wg{margin:1.5cqw;border-radius:5.5cqw;padding:3.5cqw}
+.cal .dow{font-size:3.25cqw}
+.cal .day{font-size:11cqw;line-height:1.05}
+.cal .ev{font-size:3cqw;margin-top:1.5cqw;padding-left:1.75cqw;border-left-width:.75cqw;line-height:1.25;margin-bottom:1.25cqw}
+.cal .ev b{font-size:2.75cqw}
+.dock{left:3cqw;right:3cqw;bottom:calc(6.5cqw + env(safe-area-inset-bottom,0px));height:22cqw;border-radius:7.5cqw}
+.mus .pl{bottom:8.5cqw;right:3cqw;width:9cqw;height:9cqw;font-size:3.5cqw}
+.mus .pl svg{width:4.5cqw;height:4.5cqw}
+.mus .ti{font-size:3.75cqw}
+.mus .ar{font-size:3cqw;margin-bottom:2cqw}
+.mus .ti,.mus .ar{padding-right:10.5cqw}
+.mus .pr{height:1cqw}
 
 </style></head><body>
 <div id="phone">
